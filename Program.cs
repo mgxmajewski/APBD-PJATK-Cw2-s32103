@@ -1,6 +1,6 @@
 using System.Text;
+using APBD_Cw2_s32103.Exercises;
 using LinqConsoleLab.PL.Data;
-using LinqConsoleLab.PL.Exercises;
 
 Console.OutputEncoding = Encoding.UTF8;
 DaneUczelni.Inicjalizuj();
