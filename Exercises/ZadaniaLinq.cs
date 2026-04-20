@@ -88,7 +88,9 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie05_CzyIstniejeNieaktywneZapisanie()
     {
-        throw Niezaimplementowano(nameof(Zadanie05_CzyIstniejeNieaktywneZapisanie));
+        var istnieje = DaneUczelni.Zapisy.Any(z => !z.CzyAktywny);
+
+        return new[] { $"Czy istnieje nieaktywny zapis? {(istnieje ? "Tak" : "Nie")}" };
     }
 
     /// <summary>
@@ -103,7 +105,8 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie06_CzyWszyscyProwadzacyMajaKatedre()
     {
-        throw Niezaimplementowano(nameof(Zadanie06_CzyWszyscyProwadzacyMajaKatedre));
+        var wszyscy = DaneUczelni.Prowadzacy.All(p => !string.IsNullOrWhiteSpace(p.Katedra));
+        return new []{ $"Czy wszyscy prowadzacy mają katedre: {(wszyscy ? "Tak" : "Nie")}" };
     }
 
     /// <summary>
@@ -117,7 +120,10 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie07_LiczbaAktywnychZapisow()
     {
-        throw Niezaimplementowano(nameof(Zadanie07_LiczbaAktywnychZapisow));
+        var liczba = DaneUczelni.Zapisy.Count(z => z.CzyAktywny);
+        
+        return [$"Liczba aktywnych zapisow: {liczba}"];
+        
     }
 
     /// <summary>
@@ -131,7 +137,10 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie08_UnikalneMiastaStudentow()
     {
-        throw Niezaimplementowano(nameof(Zadanie08_UnikalneMiastaStudentow));
+        return DaneUczelni.Studenci
+            .Select(s => s.Miasto)
+            .Distinct()
+            .OrderBy(miasto => miasto);
     }
 
     /// <summary>
@@ -146,7 +155,10 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie09_TrzyNajnowszeZapisy()
     {
-        throw Niezaimplementowano(nameof(Zadanie09_TrzyNajnowszeZapisy));
+        return DaneUczelni.Zapisy
+            .OrderBy(z => z.DataZapisu)
+            .Take(3)
+            .Select(z => $"{z.DataZapisu:yyyy-MM-dd} | StudentId: {z.StudentId} | PrzedmiotId: {z.PrzedmiotId}");
     }
 
     /// <summary>
