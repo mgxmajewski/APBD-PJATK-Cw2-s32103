@@ -106,7 +106,7 @@ public sealed class ZadaniaLinq
     public IEnumerable<string> Zadanie06_CzyWszyscyProwadzacyMajaKatedre()
     {
         var wszyscy = DaneUczelni.Prowadzacy.All(p => !string.IsNullOrWhiteSpace(p.Katedra));
-        return new []{ $"Czy wszyscy prowadzacy mają katedre: {(wszyscy ? "Tak" : "Nie")}" };
+        return new[] { $"Czy wszyscy prowadzacy mają katedre: {(wszyscy ? "Tak" : "Nie")}" };
     }
 
     /// <summary>
@@ -121,9 +121,8 @@ public sealed class ZadaniaLinq
     public IEnumerable<string> Zadanie07_LiczbaAktywnychZapisow()
     {
         var liczba = DaneUczelni.Zapisy.Count(z => z.CzyAktywny);
-        
+
         return [$"Liczba aktywnych zapisow: {liczba}"];
-        
     }
 
     /// <summary>
@@ -174,7 +173,13 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie10_DrugaStronaPrzedmiotow()
     {
-        throw Niezaimplementowano(nameof(Zadanie10_DrugaStronaPrzedmiotow));
+        var rozmiarStrony = 2;
+
+        return DaneUczelni.Przedmioty
+            .OrderBy(p => p.Nazwa)
+            .Skip(rozmiarStrony)
+            .Take(rozmiarStrony)
+            .Select(p => $"{p.Nazwa} | {p.Kategoria}");
     }
 
     /// <summary>
@@ -189,7 +194,11 @@ public sealed class ZadaniaLinq
     /// </summary>
     public IEnumerable<string> Zadanie11_PolaczStudentowIZapisy()
     {
-        throw Niezaimplementowano(nameof(Zadanie11_PolaczStudentowIZapisy));
+        return DaneUczelni.Studenci
+            .Join(DaneUczelni.Zapisy,
+                s => s.Id,
+                z => z.StudentId,
+                (student, zapis) => $"{student.Imie} {student.Nazwisko} | {zapis.DataZapisu:yy-MMM-dd}");
     }
 
     /// <summary>
